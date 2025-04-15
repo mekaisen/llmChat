@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 interface IContent {
   text: string
   type: string,
@@ -77,7 +79,7 @@ interface ToolCall {
   type: 'function';
 }
 
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = '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';
 
 export const postToAi = (messages: TContent | TContent[]): IMessages[] => {
   return [{
@@ -86,7 +88,7 @@ export const postToAi = (messages: TContent | TContent[]): IMessages[] => {
   }];
 };
 
-const fetchAi = async (model: string, messages: IMessages[]): Promise<Response> => {
+const PostAi = async (model: string, messages: IMessages[]): Promise<Response> => {
   const result = await fetch('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -106,6 +108,42 @@ const fetchAi = async (model: string, messages: IMessages[]): Promise<Response> 
       throw new TypeError(error.message || `Ошибка API: ${result.status}`);
     }
   }
-  return (await result.json());
+  const answer = await result.json();
+  return (answer);
 };
-export { fetchAi };
+
+interface IResponsePost {
+  error: Error | null
+  loading: boolean,
+  result: Response | null,
+}
+
+export const usePostAi = (model: string, messages: IMessages[]): IResponsePost => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
+  const [result, setResult] = useState<Response | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const answer = await PostAi(model, messages);
+        setResult(answer);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err);
+        } else {
+          setError(new Error('Неизвестная ошибка'));
+        }
+        setResult(null);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [model, JSON.stringify(messages)]);
+
+  return { loading, error, result };
+};
+export { PostAi };
