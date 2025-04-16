@@ -1,21 +1,19 @@
+import ThemeManager from './components/ThemeManager';
+import ThemeToggle from './components/ThemeToggle';
 import Main from './page/Main';
-import { postToAi, usePostAi } from './utils/fetchAi';
-
-;
 
 const App = () => {
-  const { error, loading, result } = usePostAi('arliai/qwq-32b-arliai-rpr-v1:free', postToAi('привет'));
-
-  console.log(result);
-  console.log(loading);
-  console.log(error);
   return (
-    <div className='flex w-full  min-h-screen px-4'>
-      <div className='container w-full max-w-[960px] mx-auto'>
-        <Main>
-        </Main>
+    <ThemeManager>
+      <div className='flex w-full min-h-screen px-4'>
+        <div className='container w-full max-w-[960px] mx-auto'>
+          <header className='flex justify-end py-4'>
+            <ThemeToggle />
+          </header>
+          <Main />
+        </div>
       </div>
-    </div>
+    </ThemeManager>
   );
 };
 

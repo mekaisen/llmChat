@@ -79,7 +79,7 @@ interface ToolCall {
   type: 'function';
 }
 
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = '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';
 
 export const postToAi = (messages: TContent | TContent[]): IMessages[] => {
   return [{

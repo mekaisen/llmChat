@@ -1,1 +1,47 @@
 @import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Светлая тема (по умолчанию) */
+    --color-background: 255 255 255;
+    --color-foreground: 17 24 39;
+    --color-primary: 37 99 235;
+    --color-secondary: 107 114 128;
+    --color-accent: 99 102 241;
+    --color-muted: 243 244 246;
+    --color-border: 229 231 235;
+  }
+
+  .dark {
+    --color-background: 17 24 39;
+    --color-foreground: 243 244 246;
+    --color-primary: 59 130 246;
+    --color-secondary: 156 163 175;
+    --color-accent: 129 140 248;
+    --color-muted: 31 41 55;
+    --color-border: 55 65 81;
+  }
+
+  /* Глобальные стили */
+  body {
+    @apply bg-[rgb(var(--color-background))] text-[rgb(var(--color-foreground))];
+    @apply transition-colors duration-200;
+  }
+}
+
+/* Стили для компонентов */
+@layer components {
+  .card {
+    @apply bg-[rgb(var(--color-background))] border border-[rgb(var(--color-border))] rounded-lg shadow-sm p-4;
+    @apply transition-colors duration-200;
+  }
+
+  .btn {
+    @apply bg-[rgb(var(--color-primary))] text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity;
+  }
+
+  .input {
+    @apply bg-[rgb(var(--color-muted))] border border-[rgb(var(--color-border))] rounded-md px-4 py-2 text-[rgb(var(--color-foreground))];
+    @apply transition-colors duration-200;
+  }
+}

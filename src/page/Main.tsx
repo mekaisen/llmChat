@@ -1,7 +1,9 @@
+import Chat from '../components/Chat/Chat';
+
 const Main = () => {
   return (
     <div>
-      3232
+      <Chat />
     </div>
   );
 };
