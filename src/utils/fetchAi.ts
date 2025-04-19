@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
+import type { IMessage } from '../components/Chat/Chat';
 
 interface IContent {
   text: string
@@ -79,7 +82,7 @@ interface ToolCall {
   type: 'function';
 }
 
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = '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';
 
 export const postToAi = (messages: TContent | TContent[]): IMessages[] => {
   return [{
@@ -147,3 +150,27 @@ export const usePostAi = (model: string, messages: IMessages[]): IResponsePost =
   return { loading, error, result };
 };
 export { PostAi };
+
+// export const getFakeAiResponse = (userMessage: string = 'hel'): Promise<IMessage> => {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       const responses = [
+//         'Привет! Я - чат-бот, созданный для демонстрации. Я могу поддерживать простой диалог и отвечать на базовые вопросы. К сожалению, я не обладаю реальным искусственным интеллектом и работаю на заранее заданных ответах. Тем не менее, я постараюсь быть полезным! Вы можете задать мне вопрос или просто поговорить на общие темы.',
+//         'Спасибо за ваше сообщение! Как демонстрационный чат-бот, я могу поддерживать базовую беседу. Хотя мои возможности ограничены заранее запрограммированными ответами, я постараюсь быть полезным собеседником. Не стесняйтесь задавать вопросы или делиться мыслями!',
+//         'Добрый день! Я - простой демонстрационный бот. Моя задача - показать, как может выглядеть диалог с ИИ. Я работаю на основе предустановленных ответов, поэтому не могу вести сложные дискуссии. Но я с удовольствием пообщаюсь с вами на базовом уровне!',
+//         'Здравствуйте! Рад нашему общению. Как тестовый чат-бот, я демонстрирую базовые возможности диалоговых систем. Хотя мои ответы ограничены, я постараюсь сделать наше общение приятным и информативным. О чем бы вы хотели поговорить?',
+//         'Приветствую! Я - демонстрационный чат-бот, созданный для иллюстрации работы диалоговых интерфейсов. Мои ответы предопределены, но я постараюсь быть полезным собеседником. Давайте пообщаемся!'
+//       ];
+
+//       const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+
+//       const botMessage: IMessage = {
+//         id: uuidv4(),
+//         sender: 'bot',
+//         text: randomResponse
+//       };
+
+//       resolve(botMessage);
+//     }, 1000);
+//   });
+// };

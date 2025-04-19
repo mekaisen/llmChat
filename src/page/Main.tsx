@@ -2,9 +2,7 @@ import Chat from '../components/Chat/Chat';
 
 const Main = () => {
   return (
-    <div>
-      <Chat />
-    </div>
+    <Chat />
   );
 };
 export default Main;
