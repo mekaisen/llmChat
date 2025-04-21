@@ -6,8 +6,8 @@ const View = ({ answer }: { answer: IMessage[] }) => {
       <div className='flex flex-col shrink grow max-w-[960px] mx-auto w-full'>
         <div className='flex flex-col'>
           {answer.map((message) => {
-            const isUser = message.sender === 'user';
-            const isTyping = message.sender === 'bot' && message.text === '...';
+            const isUser = message.role === 'user';
+            const isTyping = message.role === 'assistant' && message.content === '...';
 
             return (
               <div key={message.id} className={`flex flex-col ${isUser ? 'items-end' : ''}`}>
@@ -17,7 +17,7 @@ const View = ({ answer }: { answer: IMessage[] }) => {
                       <span></span><span></span><span></span>
                     </div>
                   ) : (
-                    message.text
+                    typeof (message.content) === 'string' ? message.content : ''
                   )}
                 </div>
               </div>
