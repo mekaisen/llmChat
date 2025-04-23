@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export interface IContent {
   text: string
@@ -87,7 +87,8 @@ export interface ToolCall {
 
 const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY || '';
 
-export const PostAi = async (model: string, messages: IMessages[]): Promise<Response> => {
+export const PostAi = async (model: string, messages: IMessages[]): Promise<Response | null> => {
+  if (messages.length === 0) return null;
   if (!OPENROUTER_API_KEY) {
     throw new Error('API ключ не найден. Проверьте наличие VITE_OPENROUTER_API_KEY в .env файле');
   }
@@ -123,30 +124,46 @@ export interface IResponsePost {
 export const usePostAi = (model: string, messages: IMessages[]): IResponsePost => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
-  const [result, setResult] = useState<Response | null>(null);
+  const [res, setRes] = useState<Response | null>(null);
 
   useEffect(() => {
+    setRes(null);
+    setError(null);
+    setLoading(false);
+    if (messages.length === 0) return;
+
+    let isCancelled = false;
+
     (async () => {
       setLoading(true);
-      setError(null);
-
       try {
         const answer = await PostAi(model, messages);
-        setResult(answer);
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err);
-        } else {
-          setError(new Error('Неизвестная ошибка'));
+
+        if (!isCancelled) {
+          setRes(answer);
         }
-        setResult(null);
+      } catch (err) {
+        if (!isCancelled) {
+          if (err instanceof Error) {
+            setError(err);
+          } else {
+            setError(new Error('Неизвестная ошибка'));
+          }
+          setRes(null);
+        }
       } finally {
-        setLoading(false);
+        if (!isCancelled) {
+          setLoading(false);
+        }
       }
     })();
-  }, [model, JSON.stringify(messages)]);
 
-  return { loading, error, result };
+    return () => {
+      isCancelled = true;
+    };
+  }, [model, messages]);
+
+  return { loading, error, result: res };
 };
 
 // export const getFakeAiResponse = (userMessage: string = 'hel'): Promise<IMessage> => {
