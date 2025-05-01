@@ -1,54 +1,62 @@
-# React + TypeScript + Vite
+# LLM Чат-приложение
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Тестовый проект для демонстрации реализации чат-интерфейса с использованием различных языковых моделей.
 
-Currently, two official plugins are available:
+## О проекте
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Это пет-проект, созданный для изучения и экспериментов с интеграцией современных LLM моделей (Large Language Models) в веб-интерфейс. Приложение позволяет:
 
-## Expanding the ESLint configuration
+- Вести диалог с разными языковыми моделями
+- Переключаться между разными моделями
+- Сохранять историю сообщений
+- Настраивать параметры запросов к моделям
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Используемые технологии
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- TypeScript
+- React
+- TailwindCSS
+- OpenRouter API
+-
+## Установка
+
+```bash
+# Клонирование репозитория
+git clone https://github.com/your-username/llmChat.git
+cd llmChat
+
+# Установка зависимостей
+npm install
+
+# Создание .env файла
+cp .env.example .env
+# Добавьте свои API ключи в .env файл
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Запуск проекта
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# Режим разработки
+npm run dev
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+# Сборка проекта
+npm run build
+
+# Запуск собранного проекта
+npm start
 ```
+
+## Планы по развитию
+
+- Добавление поддержки дополнительных моделей
+- Реализация локальных моделей
+- Улучшение UI/UX
+- Добавление функции экспорта диалогов
+
+## Автор
+
+Проект создан в учебных целях для демонстрации навыков работы с современными веб-технологиями и LLM моделями.
+
+## Лицензия
+
+MIT
